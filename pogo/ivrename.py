@@ -69,10 +69,15 @@ if __name__ == '__main__':
     if session:
 
         # General
-        profile = getProfile(session)
-	logging.info(profile)
         inventory = getInventory(session)
-        logging.info(inventory)
+        logging.info("Renaming Pokemon")
+	for p in inventory.party:
+            if not p.nickname:
+                logging.info("Renaming {}".format(pokedex[p.pokemon_id]))
+                ret = session.nicknamePokemon(p,"TEST")
+                logging.info(ret)
+            else:
+                logging.info("Skipping already nicknamed {}".format(p.nickname))
 
     else:
         logging.critical('Session not created successfully')
