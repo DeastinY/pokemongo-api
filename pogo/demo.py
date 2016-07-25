@@ -380,7 +380,7 @@ if __name__ == '__main__':
 
         # Pokemon related
         pokemon = findBestPokemon(session)
-        walkAndCatch(session, pokemon)
+        #walkAndCatch(session, pokemon)
 
         # Pokestop related
         fort = findClosestFort(session)
