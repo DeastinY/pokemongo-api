@@ -32,6 +32,11 @@ def getInventory(session):
     logging.info("getInventory")
     return session.getInventory()
 
+# For IV calculation
+def calcIV(pokemon):
+    IV = ((pokemon.individual_attack + pokemon.individual_defense + pokemon.individual_stamina )/45.0)*100.0
+    return IV
+
 # Entry point
 # Start off authentication and demo
 if __name__ == '__main__':
@@ -72,9 +77,12 @@ if __name__ == '__main__':
         inventory = getInventory(session)
         logging.info("Renaming Pokemon")
 	for p in inventory.party:
-            if not p.nickname:
-                logging.info("Renaming {}".format(pokedex[p.pokemon_id]))
-                ret = session.nicknamePokemon(p,"TEST")
+            if not p.nickname in ["ADD_NICKNAMES_HERE_TO_SPARE_THEM"]:
+                name = pokedex[p.pokemon_id]
+                logging.info("Renaming {}".format(name))
+                nick = "{:.0f} {} {} {}".format(calcIV(p), p.individual_attack,p.individual_defense,p.individual_stamina)
+                logging.info("To "+nick)
+                ret = session.nicknamePokemon(p, nick)
                 logging.info(ret)
             else:
                 logging.info("Skipping already nicknamed {}".format(p.nickname))
